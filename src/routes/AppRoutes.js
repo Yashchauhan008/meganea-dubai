@@ -7,46 +7,56 @@ import RegisterPage from '../pages/RegisterPage';
 import DashboardPage from '../pages/DashboardPage';
 import PartyListPage from '../pages/PartyListPage';
 import SalesmanListPage from '../pages/SalesmanListPage';
+import TileListPage from '../pages/TileListPage';
 
 const AppRoutes = () => {
-  return (
-    <Router>
-      <Routes>
-        {/* --- Public Routes (No Layout) --- */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+    return (
+        <Router>
+            <Routes>
+                {/* --- Public Routes (No Layout) --- */}
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
 
-        {/* --- Protected Routes (Wrapped in Layout) --- */}
-        <Route
-          path="/*"
-          element={
-            <ProtectedRoute> {/* General authentication check */}
-              <SidebarLayout>
-                <Routes>
-                  {/* Common Routes (accessible by all logged-in users) */}
-                  <Route path="/dashboard" element={<DashboardPage />} />
-
-                  {/* Role-Specific Routes */}
-                  <Route
-                    path="/parties"
+                {/* --- Protected Routes (Wrapped in Layout) --- */}
+                <Route
+                    path="/*"
                     element={
-                      <ProtectedRoute roles={['admin', 'dubai-staff', 'salesman']}>
-                        <PartyListPage />
-                      </ProtectedRoute>
-                    }
-                  />
+                        <ProtectedRoute> {/* General authentication check */}
+                            <SidebarLayout>
+                                <Routes>
+                                    {/* Common Routes (accessible by all logged-in users) */}
+                                    <Route path="/dashboard" element={<DashboardPage />} />
 
-                  <Route
-                    path="/salesmen"
-                    element={
-                      <ProtectedRoute roles={['admin']}>
-                        <SalesmanListPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  
-                  {/* Example for a future Accountant page */}
-                  {/*
+                                    {/* Role-Specific Routes */}
+                                    <Route
+                                        path="/parties"
+                                        element={
+                                            <ProtectedRoute roles={['admin', 'dubai-staff', 'salesman']}>
+                                                <PartyListPage />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+
+                                    <Route
+                                        path="/salesmen"
+                                        element={
+                                            <ProtectedRoute roles={['admin']}>
+                                                <SalesmanListPage />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+
+                                    <Route
+                                        path="/tiles"
+                                        element={
+                                            <ProtectedRoute roles={['admin', 'dubai-staff', 'india-staff']}>
+                                                <TileListPage />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+
+                                    {/* Example for a future Accountant page */}
+                                    {/*
                   <Route
                     path="/reports"
                     element={
@@ -57,16 +67,16 @@ const AppRoutes = () => {
                   />
                   */}
 
-                  {/* Fallback for any other authenticated route */}
-                  <Route path="*" element={<DashboardPage />} />
-                </Routes>
-              </SidebarLayout>
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </Router>
-  );
+                                    {/* Fallback for any other authenticated route */}
+                                    <Route path="*" element={<DashboardPage />} />
+                                </Routes>
+                            </SidebarLayout>
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
+        </Router>
+    );
 };
 
 export default AppRoutes;
