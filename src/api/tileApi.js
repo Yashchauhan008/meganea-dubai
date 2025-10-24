@@ -21,11 +21,13 @@ api.interceptors.request.use(config => {
 
 // --- TILE API FUNCTIONS ---
 
-export const getAllTiles = () => api.get('/tiles');
+// export const getAllTiles = () => api.get('/tiles');
 export const getTileById = (id) => api.get(`/tiles/${id}`);
 export const createTile = (tileData) => api.post('/tiles', tileData);
 export const updateTile = (id, tileData) => api.put(`/tiles/${id}`, tileData);
-
+export const getAllTiles = (params = {}) => {
+  return api.get('/tiles', { params });
+};
 // --- CORRECTED DELETE FUNCTION ---
 // It now correctly sends a DELETE request to /tiles/:id
 export const deleteTile = (id) => api.delete(`/tiles/${id}`);
