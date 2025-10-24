@@ -4,7 +4,8 @@ import { loginUser } from '../../api/authApi';
 import { useNavigate, Link } from 'react-router-dom';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
+  // UPDATED: State changed from 'email' to 'username'
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,8 @@ const LoginForm = () => {
     setError('');
     setLoading(true);
     try {
-      const data = await loginUser({ email, password });
+      // UPDATED: Pass 'username' to the loginUser function
+      const data = await loginUser({ username, password });
       auth.login(data);
       navigate('/dashboard');
     } catch (err) {
@@ -34,17 +36,18 @@ const LoginForm = () => {
       {error && <p className="text-center text-red-500 bg-red-100 dark:bg-red-900/30 p-3 rounded-md">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-text-secondary dark:text-dark-text-secondary">
-            Email Address
+          {/* UPDATED: Label and input field for Username */}
+          <label htmlFor="username" className="block text-sm font-medium text-text-secondary dark:text-dark-text-secondary">
+            Username
           </label>
           <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
+            id="username"
+            name="username"
+            type="text"
+            autoComplete="username"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className="mt-1 block w-full px-3 py-2 bg-background dark:bg-dark-background border border-border dark:border-dark-border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary dark:focus:ring-dark-primary dark:focus:border-dark-primary"
           />
         </div>

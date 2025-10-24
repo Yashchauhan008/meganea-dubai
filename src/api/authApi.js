@@ -29,16 +29,17 @@ export const registerUser = async (userData) => {
  * @returns {Promise<object>} The server response data, including the token.
  */
 export const loginUser = async (credentials) => {
-  try {
-    const response = await api.post('/login', credentials);
-    if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
+    try {
+      // The credentials object now contains { username, password }
+      const response = await api.post('/login', credentials);
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+      }
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'An unknown error occurred' };
     }
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || { message: 'An unknown error occurred' };
-  }
-};
+  };
 
 /**
  * Fetches the current user's data using the stored token.
