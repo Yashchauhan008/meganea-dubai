@@ -50,7 +50,7 @@
 //                 const sizes = [...new Set(data.tiles.map(tile => tile.size))].sort();
 //                 setAllUniqueSizes(sizes);
 //             } catch (err) {
-//                 console.error("Could not fetch all tile sizes for filter.");
+//                 console.error("Could not fetch tile sizes for filter.");
 //             }
 //         };
 //         fetchAllSizes();
@@ -74,7 +74,7 @@
 //     const handleDelete = async (id) => {
 //         if (window.confirm('Are you sure you want to archive this tile?')) {
 //             await deleteTile(id).catch(() => setError('Failed to archive tile.'));
-//             fetchTiles();
+//             fetchTiles(); // Re-fetch the list to show the item has been removed
 //         }
 //     };
     
@@ -93,7 +93,6 @@
 //                 </button>
 //             </div>
 
-//             {/* --- CONTROLS IN A SINGLE ROW --- */}
 //             <div className="flex flex-wrap items-center gap-4 mb-6">
 //                 <div className="relative flex-grow min-w-[250px]">
 //                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
@@ -105,13 +104,11 @@
 //                 </select>
 //                 <label htmlFor="threshold-toggle" className="flex items-center cursor-pointer">
 //                     <div className="relative">
-//                         <input type="checkbox" id="threshold-toggle" className="sr-only" checked={showUnderThresholdOnly} onChange={() => setShowUnderThresholdOnly(!showUnderThresholdOnly)} />
-//                         <div className="block bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full"></div>
-//                         <div className="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform"></div>
+//                         <input type="checkbox" id="threshold-toggle" className="sr-only peer" checked={showUnderThresholdOnly} onChange={() => setShowUnderThresholdOnly(!showUnderThresholdOnly)} />
+//                         <div className="block bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full peer-checked:bg-primary dark:peer-checked:bg-dark-primary transition-colors"></div>
+//                         <div className="absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform transform peer-checked:translate-x-6"></div>
 //                     </div>
-//                     <div className="ml-3 text-text dark:text-dark-text font-medium text-sm">
-//                         Under Threshold
-//                     </div>
+//                     <div className="ml-3 text-text dark:text-dark-text font-medium text-sm">Under Threshold</div>
 //                 </label>
 //             </div>
 
@@ -125,25 +122,14 @@
 //                             const needsRestock = tile.stockDetails.availableStock <= tile.restockThreshold;
 //                             return (
 //                                 <div key={tile._id} className="flex flex-col md:flex-row bg-foreground dark:bg-dark-foreground border border-border dark:border-dark-border rounded-xl shadow-md overflow-hidden transition-shadow hover:shadow-lg">
-//                                     {/* --- FIXED IMAGE CONTAINER SIZE --- */}
 //                                     <div className="w-full md:w-56 flex-shrink-0 h-56">
-//                                         <LazyLoadImage
-//                                             alt={tile.name}
-//                                             src={tile.imageUrl}
-//                                             effect="blur"
-//                                             className="w-full h-full object-cover"
-//                                             wrapperClassName="w-full h-full"
-//                                             placeholder={<div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-dark-background"><Layers size={48} className="text-gray-400" /></div>}
-//                                         />
+//                                         <LazyLoadImage alt={tile.name} src={tile.imageUrl} effect="blur" className="w-full h-full object-cover" wrapperClassName="w-full h-full" placeholder={<div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-dark-background"><Layers size={48} className="text-gray-400" /></div>} />
 //                                     </div>
 //                                     <div className="flex-grow p-5 flex flex-col justify-between">
 //                                         <div>
 //                                             <div className="flex justify-between items-start mb-4">
 //                                                 <div>
-//                                                     <h3 className="font-bold text-xl text-text dark:text-dark-text">
-//                                                         {tile.name}
-//                                                         {tile.number && <span className="ml-2 font-light text-text-secondary dark:text-dark-text-secondary">({tile.number})</span>}
-//                                                     </h3>
+//                                                     <h3 className="font-bold text-xl text-text dark:text-dark-text">{tile.name}{tile.number && <span className="ml-2 font-light text-text-secondary dark:text-dark-text-secondary">({tile.number})</span>}</h3>
 //                                                     <p className="text-xs text-text-secondary dark:text-dark-text-secondary">{tile.size} • {tile.surface}</p>
 //                                                 </div>
 //                                                 <div className="flex space-x-2">
@@ -153,23 +139,12 @@
 //                                             </div>
 //                                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
 //                                                 <div className={`bg-gray-100 dark:bg-dark-background p-3 rounded-lg border-l-4 ${needsRestock ? 'border-red-500' : 'border-transparent'}`}>
-//                                                     <div className="flex justify-between items-center text-xs text-text-secondary dark:text-dark-text-secondary">
-//                                                         <span>Available</span>
-//                                                         {needsRestock && <AlertTriangle size={14} className="text-red-500" title={`Threshold: ${tile.restockThreshold}`} />}
-//                                                     </div>
+//                                                     <div className="flex justify-between items-center text-xs text-text-secondary dark:text-dark-text-secondary"><span>Available</span>{needsRestock && <AlertTriangle size={14} className="text-red-500" title={`Threshold: ${tile.restockThreshold}`} />}</div>
 //                                                     <p className={`font-bold text-lg ${needsRestock ? 'text-red-500' : ''}`}>{tile.stockDetails.availableStock} <span className="text-xs font-normal">Box</span></p>
 //                                                     <p className="text-xs text-text-secondary dark:text-dark-text-secondary">≈ {(tile.stockDetails.availableStock * tile.conversionFactor).toFixed(2)} m²</p>
 //                                                 </div>
-//                                                 <div className="bg-gray-100 dark:bg-dark-background p-3 rounded-lg">
-//                                                     <p className="text-xs text-text-secondary dark:text-dark-text-secondary">Booked</p>
-//                                                     <p className="font-bold text-lg">{tile.stockDetails.bookedStock} <span className="text-xs font-normal">Box</span></p>
-//                                                     <p className="text-xs text-text-secondary dark:text-dark-text-secondary">≈ {(tile.stockDetails.bookedStock * tile.conversionFactor).toFixed(2)} m²</p>
-//                                                 </div>
-//                                                 <div className="bg-gray-100 dark:bg-dark-background p-3 rounded-lg">
-//                                                     <p className="text-xs text-text-secondary dark:text-dark-text-secondary">Restocking</p>
-//                                                     <p className="font-bold text-lg">{tile.stockDetails.restockingStock} <span className="text-xs font-normal">Box</span></p>
-//                                                     <p className="text-xs text-text-secondary dark:text-dark-text-secondary">≈ {(tile.stockDetails.restockingStock * tile.conversionFactor).toFixed(2)} m²</p>
-//                                                 </div>
+//                                                 <div className="bg-gray-100 dark:bg-dark-background p-3 rounded-lg"><p className="text-xs text-text-secondary dark:text-dark-text-secondary">Booked</p><p className="font-bold text-lg">{tile.stockDetails.bookedStock} <span className="text-xs font-normal">Box</span></p><p className="text-xs text-text-secondary dark:text-dark-text-secondary">≈ {(tile.stockDetails.bookedStock * tile.conversionFactor).toFixed(2)} m²</p></div>
+//                                                 <div className="bg-gray-100 dark:bg-dark-background p-3 rounded-lg"><p className="text-xs text-text-secondary dark:text-dark-text-secondary">Restocking</p><p className="font-bold text-lg">{tile.stockDetails.restockingStock} <span className="text-xs font-normal">Box</span></p><p className="text-xs text-text-secondary dark:text-dark-text-secondary">≈ {(tile.stockDetails.restockingStock * tile.conversionFactor).toFixed(2)} m²</p></div>
 //                                             </div>
 //                                         </div>
 //                                         <div className="text-xs text-text-secondary dark:text-dark-text-secondary mt-4">Created by: {tile.createdBy?.username || 'N/A'}</div>
@@ -178,7 +153,7 @@
 //                             )
 //                         })}
 //                     </div>
-
+                    
 //                     <div className="flex justify-between items-center mt-8">
 //                         <span className="text-sm text-text-secondary dark:text-dark-text-secondary">Page {pagination.page} of {pagination.pages || 1} (Total: {pagination.total} tiles)</span>
 //                         <div className="flex gap-2">
@@ -194,7 +169,6 @@
 
 // export default TileListPage;
 
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { getAllTiles, deleteTile, getTileById } from '../api/tileApi';
 import TileFormModal from '../components/tiles/TileFormModal';
@@ -205,6 +179,21 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const PAGE_LIMIT = 50;
 
+// --- NEW: Image Lightbox Component ---
+const ImageLightbox = ({ src, alt, onClose }) => (
+    <div 
+        className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100]"
+        onClick={onClose}
+    >
+        <img 
+            src={src} 
+            alt={alt} 
+            className="max-w-[90vw] max-h-[90vh] object-contain"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking on the image itself
+        />
+    </div>
+);
+
 const TileListPage = () => {
     const [tiles, setTiles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -212,6 +201,9 @@ const TileListPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingTile, setEditingTile] = useState(null);
     
+    // --- NEW: State for the image lightbox ---
+    const [expandedImage, setExpandedImage] = useState(null);
+
     const [searchTerm, setSearchTerm] = useState('');
     const [sizeFilter, setSizeFilter] = useState('');
     const [showUnderThresholdOnly, setShowUnderThresholdOnly] = useState(false);
@@ -247,7 +239,7 @@ const TileListPage = () => {
                 const sizes = [...new Set(data.tiles.map(tile => tile.size))].sort();
                 setAllUniqueSizes(sizes);
             } catch (err) {
-                console.error("Could not fetch all tile sizes for filter.");
+                console.error("Could not fetch tile sizes for filter.");
             }
         };
         fetchAllSizes();
@@ -283,6 +275,9 @@ const TileListPage = () => {
         <div className="p-4 sm:p-6 md:p-8">
             {isModalOpen && <TileFormModal tile={editingTile} onClose={() => setIsModalOpen(false)} onSave={fetchTiles} />}
             
+            {/* --- NEW: Render lightbox when an image is expanded --- */}
+            {expandedImage && <ImageLightbox src={expandedImage.src} alt={expandedImage.alt} onClose={() => setExpandedImage(null)} />}
+
             <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
                 <h1 className="text-3xl font-bold text-text dark:text-dark-text">Tiles</h1>
                 <button onClick={handleAdd} className="flex items-center bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-hover shadow-sm w-full sm:w-auto">
@@ -299,25 +294,14 @@ const TileListPage = () => {
                     <option value="">All Sizes</option>
                     {allUniqueSizes.map(size => <option key={size} value={size}>{size}</option>)}
                 </select>
-                
-                {/* --- ANIMATED TOGGLE SWITCH --- */}
                 <label htmlFor="threshold-toggle" className="flex items-center cursor-pointer">
                     <div className="relative">
-                        <input 
-                            type="checkbox" 
-                            id="threshold-toggle" 
-                            className="sr-only peer" // 'peer' is crucial for the animation
-                            checked={showUnderThresholdOnly} 
-                            onChange={() => setShowUnderThresholdOnly(!showUnderThresholdOnly)} 
-                        />
+                        <input type="checkbox" id="threshold-toggle" className="sr-only peer" checked={showUnderThresholdOnly} onChange={() => setShowUnderThresholdOnly(!showUnderThresholdOnly)} />
                         <div className="block bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full peer-checked:bg-primary dark:peer-checked:bg-dark-primary transition-colors"></div>
                         <div className="absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform transform peer-checked:translate-x-6"></div>
                     </div>
-                    <div className="ml-3 text-text dark:text-dark-text font-medium text-sm">
-                        Under Threshold
-                    </div>
+                    <div className="ml-3 text-text dark:text-dark-text font-medium text-sm">Under Threshold</div>
                 </label>
-                {/* ----------------------------- */}
             </div>
 
             {loading && <div className="text-center p-8">Loading...</div>}
@@ -330,24 +314,18 @@ const TileListPage = () => {
                             const needsRestock = tile.stockDetails.availableStock <= tile.restockThreshold;
                             return (
                                 <div key={tile._id} className="flex flex-col md:flex-row bg-foreground dark:bg-dark-foreground border border-border dark:border-dark-border rounded-xl shadow-md overflow-hidden transition-shadow hover:shadow-lg">
-                                    <div className="w-full md:w-56 flex-shrink-0 h-56">
-                                        <LazyLoadImage
-                                            alt={tile.name}
-                                            src={tile.imageUrl}
-                                            effect="blur"
-                                            className="w-full h-full object-cover"
-                                            wrapperClassName="w-full h-full"
-                                            placeholder={<div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-dark-background"><Layers size={48} className="text-gray-400" /></div>}
-                                        />
+                                    {/* --- UPDATED: Image is now clickable --- */}
+                                    <div 
+                                        className="w-full md:w-56 flex-shrink-0 h-56 cursor-pointer"
+                                        onClick={() => setExpandedImage({ src: tile.imageUrl, alt: tile.name })}
+                                    >
+                                        <LazyLoadImage alt={tile.name} src={tile.imageUrl} effect="blur" className="w-full h-full object-cover" wrapperClassName="w-full h-full" placeholder={<div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-dark-background"><Layers size={48} className="text-gray-400" /></div>} />
                                     </div>
                                     <div className="flex-grow p-5 flex flex-col justify-between">
                                         <div>
                                             <div className="flex justify-between items-start mb-4">
                                                 <div>
-                                                    <h3 className="font-bold text-xl text-text dark:text-dark-text">
-                                                        {tile.name}
-                                                        {tile.number && <span className="ml-2 font-light text-text-secondary dark:text-dark-text-secondary">({tile.number})</span>}
-                                                    </h3>
+                                                    <h3 className="font-bold text-xl text-text dark:text-dark-text">{tile.name}{tile.number && <span className="ml-2 font-light text-text-secondary dark:text-dark-text-secondary">({tile.number})</span>}</h3>
                                                     <p className="text-xs text-text-secondary dark:text-dark-text-secondary">{tile.size} • {tile.surface}</p>
                                                 </div>
                                                 <div className="flex space-x-2">
@@ -356,24 +334,24 @@ const TileListPage = () => {
                                                 </div>
                                             </div>
                                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                                                {/* --- UPDATED: Conditional border and alert icon --- */}
                                                 <div className={`bg-gray-100 dark:bg-dark-background p-3 rounded-lg border-l-4 ${needsRestock ? 'border-red-500' : 'border-transparent'}`}>
                                                     <div className="flex justify-between items-center text-xs text-text-secondary dark:text-dark-text-secondary">
                                                         <span>Available</span>
-                                                        {needsRestock && <AlertTriangle size={14} className="text-red-500" title={`Threshold: ${tile.restockThreshold}`} />}
+                                                        {needsRestock && (
+                                                            <div className="relative group">
+                                                                <AlertTriangle size={14} className="text-red-500" />
+                                                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-2 py-1 bg-black text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                                                                    Threshold: {tile.restockThreshold}
+                                                                </div>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                     <p className={`font-bold text-lg ${needsRestock ? 'text-red-500' : ''}`}>{tile.stockDetails.availableStock} <span className="text-xs font-normal">Box</span></p>
                                                     <p className="text-xs text-text-secondary dark:text-dark-text-secondary">≈ {(tile.stockDetails.availableStock * tile.conversionFactor).toFixed(2)} m²</p>
                                                 </div>
-                                                <div className="bg-gray-100 dark:bg-dark-background p-3 rounded-lg">
-                                                    <p className="text-xs text-text-secondary dark:text-dark-text-secondary">Booked</p>
-                                                    <p className="font-bold text-lg">{tile.stockDetails.bookedStock} <span className="text-xs font-normal">Box</span></p>
-                                                    <p className="text-xs text-text-secondary dark:text-dark-text-secondary">≈ {(tile.stockDetails.bookedStock * tile.conversionFactor).toFixed(2)} m²</p>
-                                                </div>
-                                                <div className="bg-gray-100 dark:bg-dark-background p-3 rounded-lg">
-                                                    <p className="text-xs text-text-secondary dark:text-dark-text-secondary">Restocking</p>
-                                                    <p className="font-bold text-lg">{tile.stockDetails.restockingStock} <span className="text-xs font-normal">Box</span></p>
-                                                    <p className="text-xs text-text-secondary dark:text-dark-text-secondary">≈ {(tile.stockDetails.restockingStock * tile.conversionFactor).toFixed(2)} m²</p>
-                                                </div>
+                                                <div className="bg-gray-100 dark:bg-dark-background p-3 rounded-lg"><p className="text-xs text-text-secondary dark:text-dark-text-secondary">Booked</p><p className="font-bold text-lg">{tile.stockDetails.bookedStock} <span className="text-xs font-normal">Box</span></p><p className="text-xs text-text-secondary dark:text-dark-text-secondary">≈ {(tile.stockDetails.bookedStock * tile.conversionFactor).toFixed(2)} m²</p></div>
+                                                <div className="bg-gray-100 dark:bg-dark-background p-3 rounded-lg"><p className="text-xs text-text-secondary dark:text-dark-text-secondary">Restocking</p><p className="font-bold text-lg">{tile.stockDetails.restockingStock} <span className="text-xs font-normal">Box</span></p><p className="text-xs text-text-secondary dark:text-dark-text-secondary">≈ {(tile.stockDetails.restockingStock * tile.conversionFactor).toFixed(2)} m²</p></div>
                                             </div>
                                         </div>
                                         <div className="text-xs text-text-secondary dark:text-dark-text-secondary mt-4">Created by: {tile.createdBy?.username || 'N/A'}</div>
@@ -382,7 +360,7 @@ const TileListPage = () => {
                             )
                         })}
                     </div>
-
+                    
                     <div className="flex justify-between items-center mt-8">
                         <span className="text-sm text-text-secondary dark:text-dark-text-secondary">Page {pagination.page} of {pagination.pages || 1} (Total: {pagination.total} tiles)</span>
                         <div className="flex gap-2">

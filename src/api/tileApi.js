@@ -1,43 +1,29 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5500/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5500/api/tiles';
 
-// Create an Axios instance for API calls
-const api = axios.create({
-  baseURL: API_URL,
-} );
+const api = axios.create({ baseURL: API_URL } );
 
-// Add a request interceptor to include the token in every request
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-}, error => {
-  return Promise.reject(error);
-});
+const getToken = () => localStorage.getItem('token');
 
+// --- Existing Functions ---
+export const getAllTiles = (params) => api.get('/', { params });
+export const getTileById = (id) => api.get(`/${id}`);
+export const createTile = (tileData) => api.post('/', tileData, { headers: { Authorization: `Bearer ${getToken()}` } });
+export const updateTile = (id, tileData) => api.put(`/${id}`, tileData, { headers: { Authorization: `Bearer ${getToken()}` } });
+export const deleteTile = (id) => api.delete(`/${id}`, { headers: { Authorization: `Bearer ${getToken()}` } });
 
-// --- TILE API FUNCTIONS ---
+// --- New Functions for Archived Tiles ---
+export const getArchivedTiles = () => api.get('/archived', { headers: { Authorization: `Bearer ${getToken()}` } });
+export const permanentlyDeleteTile = (id) => api.delete(`/archived/${id}`, { headers: { Authorization: `Bearer ${getToken()}` } });
+export const restoreTile = (id) => api.patch(`/restore/${id}`, {}, { headers: { Authorization: `Bearer ${getToken()}` } });
 
-// export const getAllTiles = () => api.get('/tiles');
-export const getTileById = (id) => api.get(`/tiles/${id}`);
-export const createTile = (tileData) => api.post('/tiles', tileData);
-export const updateTile = (id, tileData) => api.put(`/tiles/${id}`, tileData);
-export const getAllTiles = (params = {}) => {
-  return api.get('/tiles', { params });
-};
-// --- CORRECTED DELETE FUNCTION ---
-// It now correctly sends a DELETE request to /tiles/:id
-export const deleteTile = (id) => api.delete(`/tiles/${id}`);
-// -------------------------------
-
-// --- UPLOAD API FUNCTION ---
+// --- Upload Function (Separate Endpoint) ---
 export const uploadTileImage = (formData) => {
-  return api.post('/uploads', formData, {
+  return axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5500/api'}/uploads`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${getToken( )}`,
     },
   });
 };
