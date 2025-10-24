@@ -2,21 +2,28 @@ import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
-const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
+// This component now accepts an array of allowed roles
+const ProtectedRoute = ({ children, roles }) => {
+  const { isAuthenticated, user, loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
-    // You can add a loading spinner here if you want
-    return <div>Loading...</div>;
+    return <div>Loading...</div>; // Or a spinner component
   }
 
   if (!isAuthenticated) {
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to. This allows us to send them along to that page after they login.
+    // Redirect to login if not authenticated
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  // If roles are specified, check if the user's role is included
+  if (roles && !roles.includes(user.role)) {
+    // User is authenticated but not authorized
+    // You can redirect to an "Unauthorized" page or back to the dashboard
+    return <Navigate to="/dashboard" state={{ error: "Unauthorized" }} replace />;
+  }
+
+  // If authenticated and authorized, render the child component
   return children;
 };
 
