@@ -14,6 +14,7 @@ import {
   Menu,
   Sun,
   Moon,
+  FileInput,
 } from 'lucide-react';
 
 // --- Helper function to get initials ---
@@ -88,8 +89,18 @@ const Sidebar = () => {
     { to: "/parties", icon: Users, text: "Parties", roles: ['admin', 'dubai-staff', 'salesman'] },
     { to: "/salesmen", icon: UserPlus, text: "Salesmen", roles: ['admin'] },
     { to: "/bookings", icon: FileText, text: "Bookings", roles: ['admin', 'dubai-staff', 'salesman'] },
-    { to: "/dispatches", icon: Truck, text: "Dispatches", roles: ['admin', 'dubai-staff'] },
-    { to: "/restocks", icon: Warehouse, text: "Restocks", roles: ['admin', 'dubai-staff', 'india-staff'] },
+    { 
+      to: "/dispatches/process", 
+      icon: FileInput, // New icon for clarity
+      text: "Process Notes", 
+      roles: ['admin', 'dubai-staff'] 
+    },
+    { 
+      to: "/dispatches", 
+      icon: Truck, 
+      text: "All Dispatches", 
+      roles: ['admin', 'dubai-staff'] 
+    },    { to: "/restocks", icon: Warehouse, text: "Restocks", roles: ['admin', 'dubai-staff', 'india-staff'] },
   ];
 
   const sidebarContent = (isMobile = false) => (

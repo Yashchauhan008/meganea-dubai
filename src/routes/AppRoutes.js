@@ -83,7 +83,9 @@ import PartyListPage from '../pages/PartyListPage';
 import SalesmanListPage from '../pages/SalesmanListPage';
 import TileListPage from '../pages/TileListPage';
 // 1. --- IMPORT THE NEW BOOKING LIST PAGE ---
-import BookingListPage from '../pages/BookingListPage'; 
+import BookingListPage from '../pages/BookingListPage';
+import DispatchPage from '../pages/DispatchPage';
+import DispatchOrderListPage from '../pages/DispatchOrderListPage';
 
 const AppRoutes = () => {
     return (
@@ -138,7 +140,23 @@ const AppRoutes = () => {
                                             </ProtectedRoute>
                                         }
                                     />
-                                    
+
+                                    <Route
+                                        path="/dispatches"
+                                        element={
+                                            <ProtectedRoute roles={['admin', 'dubai-staff']}>
+                                                <DispatchOrderListPage />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="/dispatches/process"
+                                        element={
+                                            <ProtectedRoute roles={['admin', 'dubai-staff']}>
+                                                <DispatchPage />
+                                            </ProtectedRoute>
+                                        }
+                                    />
                                     {/* Fallback for any other authenticated route */}
                                     <Route path="*" element={<DashboardPage />} />
                                 </Routes>

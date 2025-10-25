@@ -13,3 +13,11 @@ export const updateBooking = (id, bookingData) => api.put(`/bookings/${id}`, boo
 export const deleteBooking = (id) => api.delete(`/bookings/${id}`);
 
 export const cancelBooking = (id) => api.patch(`/bookings/${id}/cancel`);
+
+export const uploadBookingImages = (bookingId, formData) => {
+    return api.post(`/bookings/${bookingId}/upload-images`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  };

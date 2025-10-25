@@ -178,7 +178,7 @@ const BookingFormModal = ({ booking, onClose, onSave }) => {
                             {availableTiles.length > 0 && (
                                 <ul className="absolute w-full bg-white dark:bg-dark-background border dark:border-dark-border rounded-md mt-1 z-10 max-h-60 overflow-y-auto shadow-lg">
                                     {availableTiles.map(tile => {
-                                        const currentStock = tile.stockDetails?.currentStock ?? 0;
+                                        const currentStock = tile.stockDetails?.availableStock ?? 0;
                                         const bookedStock = tile.stockDetails?.bookedStock ?? 0;
                                         const availableStock = currentStock - bookedStock;
                                         const conversionFactor = tile.conversionFactor || 1;
