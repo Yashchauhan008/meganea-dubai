@@ -86,11 +86,11 @@ const Sidebar = () => {
   const navItems = [
     { to: "/dashboard", icon: LayoutDashboard, text: "Dashboard", roles: ['admin', 'dubai-staff', 'india-staff', 'salesman', 'labor', 'accountant'] },
     { to: "/tiles", icon: Boxes, text: "Tiles", roles: ['admin', 'dubai-staff', 'india-staff'] },
-    { to: "/parties", icon: Users, text: "Parties", roles: ['admin', 'dubai-staff', 'salesman'] },
+    { to: "/companies", icon: Users, text: "Companies", roles: ['admin', 'dubai-staff', 'salesman'] },
     { to: "/salesmen", icon: UserPlus, text: "Salesmen", roles: ['admin'] },
     { to: "/bookings", icon: FileText, text: "Bookings", roles: ['admin', 'dubai-staff', 'salesman'] },
     { 
-      to: "/dispatches/process", 
+      to: "/process-notes", 
       icon: FileInput, // New icon for clarity
       text: "Process Notes", 
       roles: ['admin', 'dubai-staff'] 
@@ -100,7 +100,8 @@ const Sidebar = () => {
       icon: Truck, 
       text: "All Dispatches", 
       roles: ['admin', 'dubai-staff'] 
-    },    { to: "/restocks", icon: Warehouse, text: "Restocks", roles: ['admin', 'dubai-staff', 'india-staff'] },
+    },
+    { to: "/restocks", icon: Warehouse, text: "Restocks", roles: ['admin', 'dubai-staff', 'india-staff'] },
   ];
 
   const sidebarContent = (isMobile = false) => (

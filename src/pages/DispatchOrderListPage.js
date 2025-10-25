@@ -86,7 +86,7 @@ const DispatchOrderListPage = () => {
                     <h1 className="text-3xl font-bold">All Dispatch Orders</h1>
                     <p className="text-gray-500 mt-1">A historical log of all processed deliveries.</p>
                 </div>
-                <Link to="/dispatches/process" className="w-full sm:w-auto bg-primary text-white font-semibold py-2 px-4 rounded-md hover:bg-primary-hover shadow-sm text-center">
+                <Link to="/process-notes" className="w-full sm:w-auto bg-primary text-white font-semibold py-2 px-4 rounded-md hover:bg-primary-hover shadow-sm text-center">
                     Process New Notes
                 </Link>
             </div>
@@ -102,7 +102,7 @@ const DispatchOrderListPage = () => {
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <p className="font-mono text-sm text-primary dark:text-dark-primary">{order.dispatchNumber}</p>
-                                        <h3 className="font-bold text-lg text-text dark:text-dark-text truncate">{order.booking?.party?.partyName || 'N/A'}</h3>
+                                        <h3 className="font-bold text-lg text-text dark:text-dark-text truncate">{order.booking?.company?.companyName || 'N/A'}</h3>
                                         <p className="text-xs text-gray-400">Booking: {order.booking?.bookingId}</p>
                                     </div>
                                     <div className="flex items-center space-x-2">

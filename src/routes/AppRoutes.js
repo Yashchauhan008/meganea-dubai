@@ -5,7 +5,7 @@
 // import LoginPage from '../pages/LoginPage';
 // import RegisterPage from '../pages/RegisterPage';
 // import DashboardPage from '../pages/DashboardPage';
-// import PartyListPage from '../pages/PartyListPage';
+// import CompanyListPage from '../pages/CompanyListPage';
 // import SalesmanListPage from '../pages/SalesmanListPage';
 // import TileListPage from '../pages/TileListPage';
 
@@ -29,10 +29,10 @@
 
 //                                     {/* Role-Specific Routes */}
 //                                     <Route
-//                                         path="/parties"
+//                                         path="/companies"
 //                                         element={
 //                                             <ProtectedRoute roles={['admin', 'dubai-staff', 'salesman']}>
-//                                                 <PartyListPage />
+//                                                 <CompanyListPage />
 //                                             </ProtectedRoute>
 //                                         }
 //                                     />
@@ -79,7 +79,7 @@ import SidebarLayout from '../components/layout/SidebarLayout';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import DashboardPage from '../pages/DashboardPage';
-import PartyListPage from '../pages/PartyListPage';
+import CompanyListPage from '../pages/CompanyListPage';
 import SalesmanListPage from '../pages/SalesmanListPage';
 import TileListPage from '../pages/TileListPage';
 // 1. --- IMPORT THE NEW BOOKING LIST PAGE ---
@@ -115,10 +115,10 @@ const AppRoutes = () => {
                                         }
                                     />
                                     <Route
-                                        path="/parties"
+                                        path="/companies"
                                         element={
                                             <ProtectedRoute roles={['admin', 'dubai-staff', 'salesman']}>
-                                                <PartyListPage />
+                                                <CompanyListPage />
                                             </ProtectedRoute>
                                         }
                                     />
@@ -150,7 +150,7 @@ const AppRoutes = () => {
                                         }
                                     />
                                     <Route
-                                        path="/dispatches/process"
+                                        path="/process-notes"
                                         element={
                                             <ProtectedRoute roles={['admin', 'dubai-staff']}>
                                                 <DispatchPage />

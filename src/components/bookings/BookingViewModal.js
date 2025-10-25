@@ -51,7 +51,7 @@
 //                 <div className="flex-grow overflow-y-auto p-6 space-y-8">
 //                     {/* Key Info Grid */}
 //                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-//                         <div className="bg-gray-50 dark:bg-dark-background p-3 rounded-lg"><div className="flex items-center gap-2 text-gray-500 dark:text-gray-400"><ShoppingBag size={14} /> Party</div><div className="font-semibold text-base truncate">{booking.party?.partyName}</div></div>
+//                         <div className="bg-gray-50 dark:bg-dark-background p-3 rounded-lg"><div className="flex items-center gap-2 text-gray-500 dark:text-gray-400"><ShoppingBag size={14} /> Company</div><div className="font-semibold text-base truncate">{booking.company?.companyName}</div></div>
 //                         <div className="bg-gray-50 dark:bg-dark-background p-3 rounded-lg"><div className="flex items-center gap-2 text-gray-500 dark:text-gray-400"><User size={14} /> Salesman</div><div className="font-semibold text-base truncate">{booking.salesman?.username}</div></div>
 //                         <div className="bg-gray-50 dark:bg-dark-background p-3 rounded-lg"><div className="flex items-center gap-2 text-gray-500 dark:text-gray-400"><Calendar size={14} /> Booking Date</div><div className="font-semibold text-base">{format(new Date(booking.createdAt), 'dd MMM, yyyy')}</div></div>
 //                         <div className="bg-gray-50 dark:bg-dark-background p-3 rounded-lg"><div className="flex items-center gap-2 text-gray-500 dark:text-gray-400"><Hash size={14} /> LPO Number</div><div className="font-semibold text-base">{booking.lpoNumber || 'N/A'}</div></div>
@@ -197,7 +197,7 @@ const BookingViewModal = ({ booking, onClose }) => {
                 <div className="flex-grow overflow-y-auto p-6 space-y-8">
                     {/* Key Info Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-                        <div className="bg-gray-50 dark:bg-dark-background p-3 rounded-lg"><div className="flex items-center gap-2 text-gray-500 dark:text-gray-400"><ShoppingBag size={14} /> Party</div><div className="font-semibold text-base truncate">{booking.party?.partyName}</div></div>
+                        <div className="bg-gray-50 dark:bg-dark-background p-3 rounded-lg"><div className="flex items-center gap-2 text-gray-500 dark:text-gray-400"><ShoppingBag size={14} /> Company</div><div className="font-semibold text-base truncate">{booking.company?.companyName}</div></div>
                         <div className="bg-gray-50 dark:bg-dark-background p-3 rounded-lg"><div className="flex items-center gap-2 text-gray-500 dark:text-gray-400"><User size={14} /> Salesman</div><div className="font-semibold text-base truncate">{booking.salesman?.username}</div></div>
                         <div className="bg-gray-50 dark:bg-dark-background p-3 rounded-lg"><div className="flex items-center gap-2 text-gray-500 dark:text-gray-400"><Calendar size={14} /> Booking Date</div><div className="font-semibold text-base">{format(new Date(booking.createdAt), 'dd MMM, yyyy')}</div></div>
                         <div className="bg-gray-50 dark:bg-dark-background p-3 rounded-lg"><div className="flex items-center gap-2 text-gray-500 dark:text-gray-400"><Hash size={14} /> LPO Number</div><div className="font-semibold text-base">{booking.lpoNumber || 'N/A'}</div></div>

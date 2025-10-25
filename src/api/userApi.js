@@ -40,7 +40,7 @@ export const updateSalesman = (id, salesmanData) => api.put(`/salesman/${id}`, s
 export const deleteSalesman = (id) => api.delete(`/salesman/${id}`, { headers: { Authorization: `Bearer ${getToken()}` } });
 
 // --- NEW API FUNCTION ---
-export const getSalesmanParties = (salesmanId) => api.get(`/salesman/${salesmanId}/parties`, {
+export const getSalesmanCompanies = (salesmanId) => api.get(`/salesman/${salesmanId}/companies`, {
   headers: { Authorization: `Bearer ${getToken()}` },
 });
 // ------------------------

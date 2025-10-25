@@ -116,48 +116,48 @@
 // export default SalesmanListPage;
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { getAllSalesmen, deleteSalesman, getUserById, getSalesmanParties } from '../api/userApi';
+import { getAllSalesmen, deleteSalesman, getUserById, getSalesmanCompanies } from '../api/userApi';
 import SalesmanFormModal from '../components/salesmen/SalesmanFormModal';
 import { PlusCircle, Edit, Trash2, Search, User, Phone, Mail, ChevronDown, Loader2 } from 'lucide-react';
 import useDebounce from '../hooks/useDebounce';
 import { useAuth } from '../hooks/useAuth';
 
 // A new component for the accordion content
-const PartiesAccordion = ({ salesmanId }) => {
-    const [parties, setParties] = useState([]);
+const CompaniesAccordion = ({ salesmanId }) => {
+    const [companies, setCompanies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const fetchParties = async () => {
+        const fetchCompanies = async () => {
             try {
                 setIsLoading(true);
-                const { data } = await getSalesmanParties(salesmanId);
-                setParties(data);
+                const { data } = await getSalesmanCompanies(salesmanId);
+                setCompanies(data);
             } catch (error) {
-                console.error("Failed to fetch parties for salesman", error);
+                console.error("Failed to fetch companies for salesman", error);
             } finally {
                 setIsLoading(false);
             }
         };
-        fetchParties();
+        fetchCompanies();
     }, [salesmanId]);
 
     if (isLoading) {
-        return <div className="p-4 text-center text-sm">Loading parties...</div>;
+        return <div className="p-4 text-center text-sm">Loading companies...</div>;
     }
 
-    if (parties.length === 0) {
-        return <div className="p-4 text-center text-sm text-gray-500">No parties assigned to this salesman.</div>;
+    if (companies.length === 0) {
+        return <div className="p-4 text-center text-sm text-gray-500">No companies assigned to this salesman.</div>;
     }
 
     return (
         <div className="bg-gray-50 dark:bg-dark-background/50 p-4 mt-4 rounded-b-lg">
-            <h4 className="font-bold mb-2 text-sm">Assigned Parties:</h4>
+            <h4 className="font-bold mb-2 text-sm">Assigned Companies:</h4>
             <ul className="space-y-2">
-                {parties.map(party => (
-                    <li key={party._id} className="text-xs text-text-secondary dark:text-dark-text-secondary">
-                        <p className="font-semibold text-text dark:text-dark-text">{party.partyName}</p>
-                        {party.contactPerson && <p>{party.contactPerson} - {party.contactNumber}</p>}
+                {companies.map(company => (
+                    <li key={company._id} className="text-xs text-text-secondary dark:text-dark-text-secondary">
+                        <p className="font-semibold text-text dark:text-dark-text">{company.companyName}</p>
+                        {company.contactPerson && <p>{company.contactPerson} - {company.contactNumber}</p>}
                     </li>
                 ))}
             </ul>
@@ -277,13 +277,13 @@ const SalesmanListPage = () => {
                             {/* Accordion Trigger */}
                             <div className="border-t border-border dark:border-dark-border mt-auto">
                                 <button onClick={() => toggleAccordion(salesman._id)} className="w-full flex justify-between items-center p-3 text-sm font-medium text-text-secondary dark:text-dark-text-secondary hover:bg-gray-50 dark:hover:bg-dark-background/50 rounded-b-xl">
-                                    <span>View Assigned Parties</span>
+                                    <span>View Assigned Companies</span>
                                     <ChevronDown size={18} className={`transition-transform ${openAccordionId === salesman._id ? 'rotate-180' : ''}`} />
                                 </button>
                             </div>
 
                             {/* Accordion Content */}
-                            {openAccordionId === salesman._id && <PartiesAccordion salesmanId={salesman._id} />}
+                            {openAccordionId === salesman._id && <CompaniesAccordion salesmanId={salesman._id} />}
                         </div>
                     ))}
                 </div>

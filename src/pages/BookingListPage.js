@@ -103,7 +103,7 @@
 //                         <thead className="bg-gray-50 dark:bg-dark-border/20">
 //                             <tr>
 //                                 <th className="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Booking ID</th>
-//                                 <th className="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Party</th>
+//                                 <th className="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Company</th>
 //                                 <th className="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Salesman</th>
 //                                 <th className="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Date</th>
 //                                 <th className="py-3 px-4 text-center text-xs font-medium uppercase tracking-wider">Status</th>
@@ -114,7 +114,7 @@
 //                             {bookings.map(booking => (
 //                                 <tr key={booking._id} className="hover:bg-gray-50 dark:hover:bg-dark-background/50">
 //                                     <td className="py-4 px-4 font-mono text-sm">{booking.bookingId}</td>
-//                                     <td className="py-4 px-4 text-sm">{booking.party?.partyName || 'N/A'}</td>
+//                                     <td className="py-4 px-4 text-sm">{booking.company?.companyName || 'N/A'}</td>
 //                                     <td className="py-4 px-4 text-sm">{booking.salesman?.username || 'N/A'}</td>
 //                                     <td className="py-4 px-4 text-sm">{format(new Date(booking.createdAt), 'dd-MMM-yyyy')}</td>
 //                                     <td className="py-4 px-4 text-center"><span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(booking.status)}`}>{booking.status}</span></td>
@@ -253,7 +253,7 @@ const BookingListPage = () => {
                                 <div className="flex justify-between items-start mb-3">
                                     <div>
                                         <p className="font-mono text-sm text-primary dark:text-dark-primary">{booking.bookingId}</p>
-                                        <h3 className="font-bold text-lg text-text dark:text-dark-text truncate">{booking.party?.partyName || 'N/A'}</h3>
+                                        <h3 className="font-bold text-lg text-text dark:text-dark-text truncate">{booking.company?.companyName || 'N/A'}</h3>
                                     </div>
                                     <span className={getStatusPill(booking.status)}>{booking.status}</span>
                                 </div>

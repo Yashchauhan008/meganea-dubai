@@ -87,7 +87,7 @@ const DispatchPage = () => {
                 {bookingsWithImages.map(booking => (
                     <div key={booking._id} className="bg-white dark:bg-dark-foreground rounded-lg shadow-md border dark:border-dark-border">
                         <div className="p-4 border-b dark:border-dark-border">
-                            <h2 className="font-bold text-lg">{booking.party?.partyName || 'Unknown Party'}</h2>
+                            <h2 className="font-bold text-lg">{booking.company?.companyName || 'Unknown Company'}</h2>
                             <p className="text-sm text-gray-500 font-mono">{booking.bookingId}</p>
                         </div>
                         <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
