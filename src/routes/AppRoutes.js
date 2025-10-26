@@ -86,6 +86,7 @@ import TileListPage from '../pages/TileListPage';
 import BookingListPage from '../pages/BookingListPage';
 import DispatchPage from '../pages/DispatchPage';
 import DispatchOrderListPage from '../pages/DispatchOrderListPage';
+import RestockListPage from '../pages/RestockListPage';
 
 const AppRoutes = () => {
     return (
@@ -154,6 +155,14 @@ const AppRoutes = () => {
                                         element={
                                             <ProtectedRoute roles={['admin', 'dubai-staff']}>
                                                 <DispatchPage />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="/restocks" // <-- ADD THIS NEW ROUTE
+                                        element={
+                                            <ProtectedRoute roles={['admin', 'dubai-staff', 'india-staff']}>
+                                                <RestockListPage />
                                             </ProtectedRoute>
                                         }
                                     />
