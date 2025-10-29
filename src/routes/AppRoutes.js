@@ -110,7 +110,7 @@ const AppRoutes = () => {
                                     <Route
                                         path="/tiles"
                                         element={
-                                            <ProtectedRoute roles={['admin', 'dubai-staff', 'india-staff']}>
+                                            <ProtectedRoute roles={['admin', 'dubai-staff', 'india-staff','salesman']}>
                                                 <TileListPage />
                                             </ProtectedRoute>
                                         }
@@ -126,7 +126,7 @@ const AppRoutes = () => {
                                     <Route
                                         path="/salesmen"
                                         element={
-                                            <ProtectedRoute roles={['admin']}>
+                                            <ProtectedRoute roles={['admin','dubai-staff']}>
                                                 <SalesmanListPage />
                                             </ProtectedRoute>
                                         }
@@ -136,7 +136,7 @@ const AppRoutes = () => {
                                     <Route
                                         path="/bookings"
                                         element={
-                                            <ProtectedRoute roles={['admin', 'dubai-staff', 'salesman']}>
+                                            <ProtectedRoute roles={['admin', 'dubai-staff', 'salesman','labor']}>
                                                 <BookingListPage />
                                             </ProtectedRoute>
                                         }
@@ -145,7 +145,7 @@ const AppRoutes = () => {
                                     <Route
                                         path="/dispatches"
                                         element={
-                                            <ProtectedRoute roles={['admin', 'dubai-staff']}>
+                                            <ProtectedRoute roles={['admin', 'dubai-staff','salesman']}>
                                                 <DispatchOrderListPage />
                                             </ProtectedRoute>
                                         }
@@ -153,7 +153,7 @@ const AppRoutes = () => {
                                     <Route
                                         path="/process-notes"
                                         element={
-                                            <ProtectedRoute roles={['admin', 'dubai-staff']}>
+                                            <ProtectedRoute roles={['admin', 'dubai-staff','salesman']}>
                                                 <DispatchPage />
                                             </ProtectedRoute>
                                         }

@@ -19,11 +19,11 @@ import {
 
 // --- Helper function to get initials ---
 const getInitials = (name = '') => {
-    const words = name.split(/[\s_-]/).filter(Boolean);
-    if (words.length > 1) {
-        return (words[0][0] + words[1][0]).toUpperCase();
-    }
-    return name.substring(0, 2).toUpperCase();
+  const words = name.split(/[\s_-]/).filter(Boolean);
+  if (words.length > 1) {
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+  return name.substring(0, 2).toUpperCase();
 };
 
 // --- SidebarItem Component ---
@@ -31,8 +31,7 @@ const SidebarItem = ({ to, icon: Icon, children, isCollapsed }) => (
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `flex items-center h-12 px-3 my-1 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-dark-border transition-colors duration-200 ${
-        isActive ? 'bg-primary/10 text-primary dark:bg-dark-primary/20 dark:text-dark-primary' : ''
+      `flex items-center h-12 px-3 my-1 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-dark-border transition-colors duration-200 ${isActive ? 'bg-primary/10 text-primary dark:bg-dark-primary/20 dark:text-dark-primary' : ''
       } ${isCollapsed ? 'justify-center' : ''}`
     }
   >
@@ -45,36 +44,36 @@ const SidebarItem = ({ to, icon: Icon, children, isCollapsed }) => (
 
 // --- Profile Popover Component ---
 const ProfilePopover = ({ user, logout, isCollapsed }) => {
-    const popoverClasses = isCollapsed
-        ? 'absolute bottom-0 left-full ml-4' // Positioned to the right for collapsed
-        : 'absolute bottom-full mb-2 left-0 w-full'; // Positioned on top for expanded
+  const popoverClasses = isCollapsed
+    ? 'absolute bottom-0 left-full ml-4' // Positioned to the right for collapsed
+    : 'absolute bottom-full mb-2 left-0 w-full'; // Positioned on top for expanded
 
-    return (
-        <div 
-            className={`z-50 w-60 bg-foreground dark:bg-dark-border rounded-lg shadow-xl p-3
+  return (
+    <div
+      className={`z-50 w-60 bg-foreground dark:bg-dark-border rounded-lg shadow-xl p-3
                        transition-all duration-300 ease-in-out
                        opacity-0 invisible group-hover:opacity-100 group-hover:visible 
                        ${popoverClasses}`}
-        >
-            <div className="flex items-center p-2">
-                <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center font-bold text-white text-lg flex-shrink-0">
-                    {getInitials(user.username)}
-                </div>
-                <div className="ml-3">
-                    <p className="text-sm font-semibold text-text dark:text-dark-text truncate">{user.username}</p>
-                    <p className="text-xs text-text-secondary dark:text-dark-text-secondary capitalize">{user.role}</p>
-                </div>
-            </div>
-            <hr className="my-2 border-border dark:border-dark-border/50" />
-            <button
-                onClick={logout}
-                className="w-full flex items-center p-2 rounded-md text-red-500 hover:bg-red-500/10"
-            >
-                <LogOut size={18} className="mr-2" />
-                <span className="text-sm font-medium">Logout</span>
-            </button>
+    >
+      <div className="flex items-center p-2">
+        <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center font-bold text-white text-lg flex-shrink-0">
+          {getInitials(user.username)}
         </div>
-    );
+        <div className="ml-3">
+          <p className="text-sm font-semibold text-text dark:text-dark-text truncate">{user.username}</p>
+          <p className="text-xs text-text-secondary dark:text-dark-text-secondary capitalize">{user.role}</p>
+        </div>
+      </div>
+      <hr className="my-2 border-border dark:border-dark-border/50" />
+      <button
+        onClick={logout}
+        className="w-full flex items-center p-2 rounded-md text-red-500 hover:bg-red-500/10"
+      >
+        <LogOut size={18} className="mr-2" />
+        <span className="text-sm font-medium">Logout</span>
+      </button>
+    </div>
+  );
 };
 
 // --- Main Sidebar Component ---
@@ -85,21 +84,21 @@ const Sidebar = () => {
 
   const navItems = [
     { to: "/dashboard", icon: LayoutDashboard, text: "Dashboard", roles: ['admin', 'dubai-staff', 'india-staff', 'salesman', 'labor', 'accountant'] },
-    { to: "/tiles", icon: Boxes, text: "Tiles", roles: ['admin', 'dubai-staff', 'india-staff'] },
+    { to: "/tiles", icon: Boxes, text: "Tiles", roles: ['admin', 'dubai-staff', 'india-staff','salesman'] },
     { to: "/companies", icon: Users, text: "Companies", roles: ['admin', 'dubai-staff', 'salesman'] },
-    { to: "/salesmen", icon: UserPlus, text: "Salesmen", roles: ['admin'] },
-    { to: "/bookings", icon: FileText, text: "Bookings", roles: ['admin', 'dubai-staff', 'salesman'] },
-    { 
-      to: "/process-notes", 
+    { to: "/salesmen", icon: UserPlus, text: "Salesmen", roles: ['admin','dubai-staff'] },
+    { to: "/bookings", icon: FileText, text: "Bookings", roles: ['admin', 'dubai-staff', 'salesman','labor'] },
+    {
+      to: "/process-notes",
       icon: FileInput, // New icon for clarity
-      text: "Process Notes", 
-      roles: ['admin', 'dubai-staff'] 
+      text: "Process Notes",
+      roles: ['admin', 'dubai-staff','salesman']
     },
-    { 
-      to: "/dispatches", 
-      icon: Truck, 
-      text: "All Dispatches", 
-      roles: ['admin', 'dubai-staff'] 
+    {
+      to: "/dispatches",
+      icon: Truck,
+      text: "All Dispatches",
+      roles: ['admin', 'dubai-staff','salesman']
     },
     { to: "/restocks", icon: Warehouse, text: "Restocks", roles: ['admin', 'dubai-staff', 'india-staff'] },
   ];
@@ -123,7 +122,7 @@ const Sidebar = () => {
 
       {/* --- Role-Based Navigation --- */}
       <nav className="flex-1 px-2 py-4 overflow-y-auto">
-        {navItems.map((item) => 
+        {navItems.map((item) =>
           item.roles.includes(user?.role) && (
             <SidebarItem
               key={item.to}
@@ -173,7 +172,7 @@ const Sidebar = () => {
       <aside className={`bg-foreground dark:bg-dark-foreground flex-col h-screen sticky top-0 hidden lg:flex transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'}`}>
         {sidebarContent(false)}
       </aside>
-      
+
       {/* Mobile Header & Sidebar */}
       <header className="lg:hidden flex items-center justify-between p-4 bg-foreground dark:bg-dark-foreground border-b border-border dark:border-dark-border sticky top-0 z-30">
         <Link to="/" className="text-xl font-bold text-primary dark:text-dark-primary">Mega Dubai</Link>

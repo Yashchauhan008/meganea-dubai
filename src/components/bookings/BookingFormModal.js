@@ -10,7 +10,7 @@ const BookingFormModal = ({ booking, onClose, onSave }) => {
     const isEditMode = !!booking;
 
     // Form State
-    const [company, setCompany] = useState(booking?.company?._id || '');
+    const [company, setParty] = useState(booking?.company?._id || '');
     const [salesman, setSalesman] = useState(booking?.salesman?._id || '');
     const [lpoNumber, setLpoNumber] = useState(booking?.lpoNumber || '');
     const [notes, setNotes] = useState(booking?.notes || '');
@@ -45,10 +45,11 @@ const BookingFormModal = ({ booking, onClose, onSave }) => {
     useEffect(() => {
         if (isEditMode && booking.tilesList) {
             const initialTiles = booking.tilesList.map(item => {
-                const currentStock = item.tile.stockDetails?.currentStock ?? 0;
+                const currentStock = item.tile.stockDetails?.availableStock ?? 0;
                 const bookedStock = item.tile.stockDetails?.bookedStock ?? 0;
                 // For an existing booking, its own quantity shouldn't count against its availability
                 const availableStock = currentStock - bookedStock + item.quantity;
+                console.log(currentStock,bookedStock)
                 
                 return {
                     tile: item.tile,
@@ -65,9 +66,9 @@ const BookingFormModal = ({ booking, onClose, onSave }) => {
     // Auto-select salesman when company changes
     useEffect(() => {
         if (company && companies.length > 0) {
-            const selectedCompany = companies.find(p => p._id === company);
+            const selectedParty = companies.find(p => p._id === company);
             // The salesman object might be populated differently, so check both possibilities
-            const salesmanId = selectedCompany?.salesman?._id || selectedCompany?.salesman;
+            const salesmanId = selectedParty?.salesman?._id || selectedParty?.salesman;
             if (salesmanId) {
                 setSalesman(salesmanId);
             }
@@ -94,14 +95,13 @@ const BookingFormModal = ({ booking, onClose, onSave }) => {
         
         const currentStock = tile.stockDetails?.availableStock ?? 0;
         const bookedStock = tile.stockDetails?.bookedStock ?? 0;
-        const availableStock = currentStock - bookedStock;
-        console.log(currentStock,bookedStock)
+        const newAvailableStock = currentStock - bookedStock;
         
         setTilesList(prev => [...prev, { 
             tile: tile, 
             quantityInBoxes: 1, 
             quantityInSqM: (1 * (tile.conversionFactor || 1)).toFixed(2),
-            available: availableStock 
+            available: newAvailableStock 
         }]);
         setSearchTerm('');
         setAvailableTiles([]);
@@ -152,6 +152,8 @@ const BookingFormModal = ({ booking, onClose, onSave }) => {
         }
     };
 
+    // console.log(tilesList)
+
     return (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
             <div className="bg-white dark:bg-dark-foreground rounded-lg shadow-xl p-6 md:p-8 w-full max-w-4xl max-h-[90vh] flex flex-col">
@@ -165,7 +167,7 @@ const BookingFormModal = ({ booking, onClose, onSave }) => {
                 <form onSubmit={handleSubmit} id="booking-form" className="flex-grow overflow-y-auto pr-2 -mr-2 space-y-8">
                     {/* Booking Details */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                        <div><label className="font-medium text-sm text-gray-700 dark:text-gray-300">Company *</label><select required value={company} onChange={e => setCompany(e.target.value)} className="w-full mt-1 p-2 border rounded-md dark:bg-dark-background dark:border-dark-border"><option value="" disabled>Select a company</option>{companies.map(p => <option key={p._id} value={p._id}>{p.companyName}</option>)}</select></div>
+                        <div><label className="font-medium text-sm text-gray-700 dark:text-gray-300">Party *</label><select required value={company} onChange={e => setParty(e.target.value)} className="w-full mt-1 p-2 border rounded-md dark:bg-dark-background dark:border-dark-border"><option value="" disabled>Select a company</option>{companies.map(p => <option key={p._id} value={p._id}>{p.companyName}</option>)}</select></div>
                         <div><label className="font-medium text-sm text-gray-700 dark:text-gray-300">Salesman *</label><select required value={salesman} onChange={e => setSalesman(e.target.value)} className="w-full mt-1 p-2 border rounded-md dark:bg-dark-background dark:border-dark-border disabled:bg-gray-100 dark:disabled:bg-dark-border/50"><option value="" disabled>Select a salesman</option>{salesmen.map(s => <option key={s._id} value={s._id}>{s.username}</option>)}</select></div>
                         <div><label className="font-medium text-sm text-gray-700 dark:text-gray-300">LPO Number</label><input type="text" value={lpoNumber} onChange={e => setLpoNumber(e.target.value)} className="w-full mt-1 p-2 border rounded-md dark:bg-dark-background dark:border-dark-border" /></div>
                         <div><label className="font-medium text-sm text-gray-700 dark:text-gray-300">Notes</label><textarea value={notes} onChange={e => setNotes(e.target.value)} rows="1" className="w-full mt-1 p-2 border rounded-md dark:bg-dark-background dark:border-dark-border" /></div>
