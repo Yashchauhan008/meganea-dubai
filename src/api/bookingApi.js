@@ -34,3 +34,5 @@ export const uploadBookingImages = (bookingId, formData) => {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 };
+
+export const deleteUnprocessedImage = (bookingId, imageId) => api.delete(`/bookings/${bookingId}/unprocessed-images/${imageId}`);

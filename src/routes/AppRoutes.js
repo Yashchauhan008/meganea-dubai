@@ -153,7 +153,7 @@ const AppRoutes = () => {
                                     <Route
                                         path="/process-notes"
                                         element={
-                                            <ProtectedRoute roles={['admin', 'dubai-staff','salesman']}>
+                                            <ProtectedRoute roles={['admin', 'dubai-staff','salesman','labor']}>
                                                 <DispatchPage />
                                             </ProtectedRoute>
                                         }

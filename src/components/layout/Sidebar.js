@@ -92,7 +92,7 @@ const Sidebar = () => {
       to: "/process-notes",
       icon: FileInput, // New icon for clarity
       text: "Process Notes",
-      roles: ['admin', 'dubai-staff','salesman']
+      roles: ['admin', 'dubai-staff','salesman','labor']
     },
     {
       to: "/dispatches",
