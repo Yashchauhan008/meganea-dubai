@@ -57,3 +57,9 @@ export const uploadTileImage = (formData) => {
     },
   } );
 };
+
+
+export const bulkCreateTiles = (tiles) => {
+  // The payload is an object with a 'tiles' key containing the array
+  return api.post('/tiles/bulk', { tiles });
+};
